@@ -4,14 +4,46 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Knapsack {
-    public static LinkedList<Item> solve(List<Item> allItems,int maxWeight) {
+    private final LinkedList<? extends Item> items;
+    private final int maxWeight;
+
+    private Knapsack(LinkedList<? extends Item> items, int maxWeight) {
+        this.items = items;
+        this.maxWeight = maxWeight;
+    }
+
+    public LinkedList<? extends Item> getItems(){
+        return new LinkedList<>(items);
+    }
+
+    public int getMaxWeight(){
+        return maxWeight;
+    }
+
+    public int getTotalPrice(){
+        int sum=0;
+        for (Item item:items){
+            sum+=item.getPrice();
+        }
+        return sum;
+    }
+
+    public int getTotalWeight(){
+        int weight=0;
+        for (Item item:items){
+            weight+=item.getWeight();
+        }
+        return weight;
+    }
+
+    public static Knapsack solve(List<? extends Item> allItems, int maxWeight) {
         if(maxWeight<0){
             throw new IllegalArgumentException("MaxWeight must be bigger then 0");
         }
         if(allItems.size()==0){
             throw new IllegalArgumentException("There must be at least 1 item");
         }
-        LinkedList<Item> knapsack = new LinkedList<>();
+        LinkedList<Item> correctItems = new LinkedList<>();
         int[][] maxPrice = new int[allItems.size()][maxWeight+1];
         int itemIndex=0;
         for(Item item:allItems) {
@@ -47,11 +79,11 @@ public class Knapsack {
                 previousValue=0;
             }
             if(previousValue!=currentValue){
-                knapsack.add(allItems.get(itemIndex));
+                correctItems.add(allItems.get(itemIndex));
                 currentCollum-=allItems.get(itemIndex).getWeight();
             }
         }
-        return knapsack;
+        return new Knapsack(correctItems,maxWeight);
     }
 
 }

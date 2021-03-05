@@ -186,11 +186,7 @@ public class Main {
         items.add(new Item(2, 79));
         items.add(new Item(8, 100));
         items.add(new Item(6, 118));
-        List<Item> solution = Knapsack.solve(items, 14);
-        int sum = 0;
-        for (Item item : solution) {
-            sum += item.getPrice();
-        }
-        System.out.println(sum);
+        Knapsack solution = Knapsack.solve(items, 100);
+        System.out.println(solution.getTotalPrice());
     }
 }
