@@ -8,9 +8,6 @@ public class Item {
         if(weight<0){
             throw new IllegalArgumentException("Weight must be bigger then 0");
         }
-        if(price<0){
-            throw new IllegalArgumentException("Price must be bigger then 0");
-        }
         this.weight = weight;
         this.price = price;
     }

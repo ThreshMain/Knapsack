@@ -21,14 +21,13 @@ public class Knapsack {
                         maxPrice[itemIndex][currentWeight] = item.getPrice();
                     } else {
                         int weightWithItem = currentWeight - item.getWeight();
-                        int priceWithItem;
-                        if (weightWithItem < 0) {
-                            priceWithItem = -1;
-                        } else {
-                            priceWithItem = maxPrice[itemIndex - 1][weightWithItem] + item.getPrice();
-                        }
                         int priceWithoutItem = maxPrice[itemIndex - 1][currentWeight];
-                        maxPrice[itemIndex][currentWeight] = Math.max(priceWithItem, priceWithoutItem);
+                        if (weightWithItem < 0) {
+                            maxPrice[itemIndex][currentWeight]=priceWithoutItem;
+                        } else {
+                            int priceWithItem = maxPrice[itemIndex - 1][weightWithItem] + item.getPrice();
+                            maxPrice[itemIndex][currentWeight] = Math.max(priceWithItem, priceWithoutItem);
+                        }
                     }
                 } else {
                     if (itemIndex != 0) {
