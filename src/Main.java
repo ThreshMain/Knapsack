@@ -2,7 +2,6 @@ import knapsack.Item;
 import knapsack.Knapsack;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -186,7 +185,17 @@ public class Main {
         items.add(new Item(2, 79));
         items.add(new Item(8, 100));
         items.add(new Item(6, 118));
-        Knapsack solution = Knapsack.solve(items, 100);
+        Knapsack<Item> solution = Knapsack.solve(items, 80);
         System.out.println(solution.getTotalPrice());
+        LinkedList<Item> itemsSorted = solution.getItems();
+        itemsSorted.sort((o1, o2) -> {
+            if (o1.getWeight() == o2.getWeight()) {
+                return o1.getPrice() - o2.getPrice();
+            }
+            return o1.getWeight() - o2.getWeight();
+        });
+        for (Item item:itemsSorted){
+            System.out.println(item.getWeight()+","+item.getPrice());
+        }
     }
 }
